@@ -120,21 +120,19 @@ export default function LoginPage() {
           >
             {/* Corporate Name Display */}
             <div className="relative mb-8">
-              {/* Main Name - Responsive Sizing */}
-              <div className="space-y-2">
+              {/* Main Name - Responsive Sizing with Anti-Aliasing */}
+              <div className="space-y-2 antialiased">
                 {/* First Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 leading-tight tracking-tight">
                   {"SSERUWAGI".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${index * 0.08}s`,
-                        textShadow: `
-                          0 0 20px rgba(59, 130, 246, 0.5),
-                          0 0 40px rgba(59, 130, 246, 0.3),
-                          0 0 60px rgba(59, 130, 246, 0.1)
-                        `,
+                        filter: "none",
+                        WebkitFontSmoothing: "antialiased",
+                        MozOsxFontSmoothing: "grayscale",
                       }}
                     >
                       {letter}
@@ -143,18 +141,16 @@ export default function LoginPage() {
                 </h1>
 
                 {/* Second Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 leading-tight tracking-tight">
                   {"SINCLAIRE".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${(index + 9) * 0.08}s`,
-                        textShadow: `
-                          0 0 20px rgba(99, 102, 241, 0.5),
-                          0 0 40px rgba(99, 102, 241, 0.3),
-                          0 0 60px rgba(99, 102, 241, 0.1)
-                        `,
+                        filter: "none",
+                        WebkitFontSmoothing: "antialiased",
+                        MozOsxFontSmoothing: "grayscale",
                       }}
                     >
                       {letter}
@@ -163,18 +159,16 @@ export default function LoginPage() {
                 </h1>
 
                 {/* Third Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 leading-tight tracking-tight">
                   {"SEBASTIAN".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${(index + 18) * 0.08}s`,
-                        textShadow: `
-                          0 0 20px rgba(34, 211, 238, 0.5),
-                          0 0 40px rgba(34, 211, 238, 0.3),
-                          0 0 60px rgba(34, 211, 238, 0.1)
-                        `,
+                        filter: "none",
+                        WebkitFontSmoothing: "antialiased",
+                        MozOsxFontSmoothing: "grayscale",
                       }}
                     >
                       {letter}
@@ -192,7 +186,7 @@ export default function LoginPage() {
             {/* Professional Subtitle */}
             <div className="mt-8 mb-12">
               <div className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 rounded-full">
-                <p className="text-lg sm:text-xl md:text-2xl text-white font-semibold tracking-wide">
+                <p className="text-lg sm:text-xl md:text-2xl text-white font-semibold tracking-wide antialiased">
                   <span className="animate-professional-typewriter">CHIEF TECHNOLOGY OFFICER • E-VOTING SYSTEMS</span>
                 </p>
               </div>
@@ -293,15 +287,15 @@ export default function LoginPage() {
 
           @keyframes corporate-letter {
             0% { 
-              transform: translateY(50px) rotateX(90deg) scale(0.5); 
+              transform: translateY(30px) scale(0.8); 
               opacity: 0; 
             }
             50% { 
-              transform: translateY(-10px) rotateX(45deg) scale(1.1); 
-              opacity: 0.8; 
+              transform: translateY(-5px) scale(1.05); 
+              opacity: 0.9; 
             }
             100% { 
-              transform: translateY(0) rotateX(0deg) scale(1); 
+              transform: translateY(0) scale(1); 
               opacity: 1; 
             }
           }
@@ -390,7 +384,7 @@ export default function LoginPage() {
           }
 
           .animate-corporate-letter {
-            animation: corporate-letter 1.2s ease-out forwards;
+            animation: corporate-letter 1s ease-out forwards;
           }
 
           .animate-professional-glow {
