@@ -17,14 +17,14 @@ export default function LoginPage() {
   const [animationPhase, setAnimationPhase] = useState(0)
 
   useEffect(() => {
-    // Professional animation sequence
+    // Faster, more visible animation sequence
     const timers = [
-      setTimeout(() => setAnimationPhase(1), 400), // Corporate particles
-      setTimeout(() => setAnimationPhase(2), 900), // Name entrance
-      setTimeout(() => setAnimationPhase(3), 2800), // Professional glow
-      setTimeout(() => setAnimationPhase(4), 3800), // Data streams
-      setTimeout(() => setAnimationPhase(5), 4800), // Final transition
-      setTimeout(() => setShowIntro(false), 5800), // To login
+      setTimeout(() => setAnimationPhase(1), 200), // Corporate particles
+      setTimeout(() => setAnimationPhase(2), 500), // Name entrance - FASTER
+      setTimeout(() => setAnimationPhase(3), 2000), // Professional glow
+      setTimeout(() => setAnimationPhase(4), 3000), // Data streams
+      setTimeout(() => setAnimationPhase(5), 4000), // Final transition
+      setTimeout(() => setShowIntro(false), 5000), // To login - SHORTER
     ]
 
     return () => timers.forEach(clearTimeout)
@@ -120,19 +120,17 @@ export default function LoginPage() {
           >
             {/* Corporate Name Display */}
             <div className="relative mb-8">
-              {/* Main Name - Responsive Sizing with Anti-Aliasing */}
-              <div className="space-y-2 antialiased">
+              {/* Main Name - Solid White Text for Visibility */}
+              <div className="space-y-4 antialiased">
                 {/* First Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 leading-tight tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
                   {"SSERUWAGI".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${index * 0.08}s`,
-                        filter: "none",
-                        WebkitFontSmoothing: "antialiased",
-                        MozOsxFontSmoothing: "grayscale",
+                        textShadow: "0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4)",
                       }}
                     >
                       {letter}
@@ -141,16 +139,14 @@ export default function LoginPage() {
                 </h1>
 
                 {/* Second Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 leading-tight tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
                   {"SINCLAIRE".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${(index + 9) * 0.08}s`,
-                        filter: "none",
-                        WebkitFontSmoothing: "antialiased",
-                        MozOsxFontSmoothing: "grayscale",
+                        textShadow: "0 0 20px rgba(99, 102, 241, 0.8), 0 0 40px rgba(99, 102, 241, 0.4)",
                       }}
                     >
                       {letter}
@@ -159,16 +155,14 @@ export default function LoginPage() {
                 </h1>
 
                 {/* Third Name */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 leading-tight tracking-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight tracking-tight drop-shadow-2xl">
                   {"SEBASTIAN".split("").map((letter, index) => (
                     <span
                       key={index}
                       className="inline-block animate-corporate-letter"
                       style={{
                         animationDelay: `${(index + 18) * 0.08}s`,
-                        filter: "none",
-                        WebkitFontSmoothing: "antialiased",
-                        MozOsxFontSmoothing: "grayscale",
+                        textShadow: "0 0 20px rgba(34, 211, 238, 0.8), 0 0 40px rgba(34, 211, 238, 0.4)",
                       }}
                     >
                       {letter}
@@ -177,10 +171,8 @@ export default function LoginPage() {
                 </h1>
               </div>
 
-              {/* Professional Glow Overlay */}
-              {animationPhase >= 3 && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-professional-glow"></div>
-              )}
+              {/* Blue Glow Background for Extra Visibility */}
+              <div className="absolute inset-0 bg-blue-500/10 rounded-lg blur-3xl -z-10"></div>
             </div>
 
             {/* Professional Subtitle */}
