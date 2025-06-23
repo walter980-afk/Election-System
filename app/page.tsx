@@ -17,14 +17,14 @@ export default function LoginPage() {
   const [animationPhase, setAnimationPhase] = useState(0)
 
   useEffect(() => {
-    // Extended animation sequence with more phases
+    // Professional animation sequence
     const timers = [
-      setTimeout(() => setAnimationPhase(1), 300), // Particle explosion
-      setTimeout(() => setAnimationPhase(2), 800), // Name entrance
-      setTimeout(() => setAnimationPhase(3), 2500), // Holographic effect
-      setTimeout(() => setAnimationPhase(4), 3500), // Matrix rain
-      setTimeout(() => setAnimationPhase(5), 4500), // Final zoom out
-      setTimeout(() => setShowIntro(false), 5500), // Transition to login
+      setTimeout(() => setAnimationPhase(1), 400), // Corporate particles
+      setTimeout(() => setAnimationPhase(2), 900), // Name entrance
+      setTimeout(() => setAnimationPhase(3), 2800), // Professional glow
+      setTimeout(() => setAnimationPhase(4), 3800), // Data streams
+      setTimeout(() => setAnimationPhase(5), 4800), // Final transition
+      setTimeout(() => setShowIntro(false), 5800), // To login
     ]
 
     return () => timers.forEach(clearTimeout)
@@ -57,24 +57,24 @@ export default function LoginPage() {
 
   if (showIntro) {
     return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden z-50 perspective-1000">
-        {/* Dynamic Background Layers */}
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center overflow-hidden z-50">
+        {/* Corporate Background Elements */}
         <div className="absolute inset-0">
-          {/* Animated Grid */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="grid-background animate-grid-move"></div>
+          {/* Professional Grid */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="corporate-grid animate-grid-slide"></div>
           </div>
 
-          {/* Particle Explosion System */}
+          {/* Corporate Particle System */}
           <div className="absolute inset-0">
-            {[...Array(200)].map((_, i) => (
+            {[...Array(80)].map((_, i) => (
               <div
                 key={i}
-                className={`absolute w-1 h-1 rounded-full transition-all duration-1000 ${
-                  animationPhase >= 1 ? "animate-particle-explosion" : "opacity-0"
+                className={`absolute w-1 h-1 rounded-full transition-all duration-1500 ${
+                  animationPhase >= 1 ? "animate-corporate-particles" : "opacity-0"
                 }`}
                 style={{
-                  background: `hsl(${Math.random() * 360}, 70%, 60%)`,
+                  background: `hsl(${210 + Math.random() * 30}, 70%, ${60 + Math.random() * 20}%)`,
                   top: "50%",
                   left: "50%",
                   animationDelay: Math.random() * 2 + "s",
@@ -84,350 +84,340 @@ export default function LoginPage() {
             ))}
           </div>
 
-          {/* Matrix Rain Effect */}
+          {/* Data Stream Effect */}
           {animationPhase >= 4 && (
-            <div className="absolute inset-0 opacity-30">
-              {[...Array(50)].map((_, i) => (
+            <div className="absolute inset-0 opacity-20">
+              {[...Array(20)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute text-green-400 text-xs font-mono animate-matrix-rain"
+                  className="absolute text-blue-300 text-xs font-mono animate-data-stream"
                   style={{
-                    left: Math.random() * 100 + "%",
-                    animationDelay: Math.random() * 2 + "s",
-                    animationDuration: Math.random() * 3 + 2 + "s",
-                  }}
-                >
-                  {Math.random().toString(36).substring(7)}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Holographic Scanlines */}
-          {animationPhase >= 3 && (
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="holographic-scanlines"></div>
-            </div>
-          )}
-        </div>
-
-        {/* Main Animation Container */}
-        <div className="relative z-10 text-center transform-gpu">
-          {/* Glitch Effect Container */}
-          <div
-            className={`relative transition-all duration-1000 ease-out ${
-              animationPhase >= 2 ? "transform scale-100 opacity-100" : "transform scale-0 opacity-0"
-            } ${animationPhase >= 5 ? "animate-final-zoom" : ""}`}
-          >
-            {/* Main Name with 3D Effect */}
-            <div className="relative">
-              {/* Glitch Layers */}
-              <h1 className="absolute inset-0 text-6xl md:text-9xl font-black text-red-500 opacity-20 animate-glitch-1">
-                SSERUWAGI SINCLAIRE SEBASTIAN
-              </h1>
-              <h1 className="absolute inset-0 text-6xl md:text-9xl font-black text-blue-500 opacity-20 animate-glitch-2">
-                SSERUWAGI SINCLAIRE SEBASTIAN
-              </h1>
-
-              {/* Main Text with Individual Letter Animation */}
-              <h1 className="relative text-6xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 tracking-wider leading-tight">
-                {"SSERUWAGI SINCLAIRE SEBASTIAN".split("").map((letter, index) => (
-                  <span
-                    key={index}
-                    className={`inline-block animate-letter-3d ${letter === " " ? "mx-4" : ""}`}
-                    style={{
-                      animationDelay: `${index * 0.05}s`,
-                      textShadow: `
-                        0 0 10px currentColor,
-                        0 0 20px currentColor,
-                        0 0 40px currentColor,
-                        0 0 80px currentColor
-                      `,
-                    }}
-                  >
-                    {letter === " " ? "\u00A0" : letter}
-                  </span>
-                ))}
-              </h1>
-
-              {/* Holographic Overlay */}
-              {animationPhase >= 3 && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-holographic-sweep"></div>
-              )}
-            </div>
-
-            {/* Subtitle with Typewriter Effect */}
-            <div className="mt-8 overflow-hidden">
-              <p className="text-2xl md:text-4xl text-cyan-300 font-mono animate-typewriter">
-                <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
-                  &gt; E-VOTING SYSTEM ARCHITECT
-                </span>
-                <span className="animate-cursor">|</span>
-              </p>
-            </div>
-
-            {/* Floating Geometric Elements */}
-            <div className="absolute inset-0 pointer-events-none">
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute animate-float-geometric"
-                  style={{
-                    top: Math.random() * 100 + "%",
                     left: Math.random() * 100 + "%",
                     animationDelay: Math.random() * 2 + "s",
                     animationDuration: Math.random() * 4 + 3 + "s",
                   }}
                 >
+                  {["01", "10", "11", "00"][Math.floor(Math.random() * 4)]}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Professional Light Rays */}
+          {animationPhase >= 3 && (
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="professional-rays"></div>
+            </div>
+          )}
+        </div>
+
+        {/* Main Content Container */}
+        <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
+          <div
+            className={`transition-all duration-1000 ease-out ${
+              animationPhase >= 2 ? "transform scale-100 opacity-100" : "transform scale-50 opacity-0"
+            } ${animationPhase >= 5 ? "animate-professional-exit" : ""}`}
+          >
+            {/* Corporate Name Display */}
+            <div className="relative mb-8">
+              {/* Main Name - Responsive Sizing */}
+              <div className="space-y-2">
+                {/* First Name */}
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 leading-tight">
+                  {"SSERUWAGI".split("").map((letter, index) => (
+                    <span
+                      key={index}
+                      className="inline-block animate-corporate-letter"
+                      style={{
+                        animationDelay: `${index * 0.08}s`,
+                        textShadow: `
+                          0 0 20px rgba(59, 130, 246, 0.5),
+                          0 0 40px rgba(59, 130, 246, 0.3),
+                          0 0 60px rgba(59, 130, 246, 0.1)
+                        `,
+                      }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </h1>
+
+                {/* Second Name */}
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 leading-tight">
+                  {"SINCLAIRE".split("").map((letter, index) => (
+                    <span
+                      key={index}
+                      className="inline-block animate-corporate-letter"
+                      style={{
+                        animationDelay: `${(index + 9) * 0.08}s`,
+                        textShadow: `
+                          0 0 20px rgba(99, 102, 241, 0.5),
+                          0 0 40px rgba(99, 102, 241, 0.3),
+                          0 0 60px rgba(99, 102, 241, 0.1)
+                        `,
+                      }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </h1>
+
+                {/* Third Name */}
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 leading-tight">
+                  {"SEBASTIAN".split("").map((letter, index) => (
+                    <span
+                      key={index}
+                      className="inline-block animate-corporate-letter"
+                      style={{
+                        animationDelay: `${(index + 18) * 0.08}s`,
+                        textShadow: `
+                          0 0 20px rgba(34, 211, 238, 0.5),
+                          0 0 40px rgba(34, 211, 238, 0.3),
+                          0 0 60px rgba(34, 211, 238, 0.1)
+                        `,
+                      }}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </h1>
+              </div>
+
+              {/* Professional Glow Overlay */}
+              {animationPhase >= 3 && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-professional-glow"></div>
+              )}
+            </div>
+
+            {/* Professional Subtitle */}
+            <div className="mt-8 mb-12">
+              <div className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 rounded-full">
+                <p className="text-lg sm:text-xl md:text-2xl text-white font-semibold tracking-wide">
+                  <span className="animate-professional-typewriter">CHIEF TECHNOLOGY OFFICER • E-VOTING SYSTEMS</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Corporate Geometric Elements */}
+            <div className="absolute inset-0 pointer-events-none">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute animate-corporate-float"
+                  style={{
+                    top: Math.random() * 100 + "%",
+                    left: Math.random() * 100 + "%",
+                    animationDelay: Math.random() * 2 + "s",
+                    animationDuration: Math.random() * 6 + 4 + "s",
+                  }}
+                >
                   <div
-                    className={`w-4 h-4 border-2 ${
-                      i % 3 === 0
-                        ? "border-cyan-400 rotate-45"
-                        : i % 3 === 1
-                          ? "border-purple-400 rounded-full"
-                          : "border-pink-400"
+                    className={`w-3 h-3 border border-blue-400/50 ${
+                      i % 2 === 0 ? "rotate-45" : "rounded-full"
                     } animate-spin`}
-                    style={{ animationDuration: Math.random() * 3 + 2 + "s" }}
+                    style={{
+                      animationDuration: Math.random() * 8 + 4 + "s",
+                      boxShadow: "0 0 10px rgba(59, 130, 246, 0.3)",
+                    }}
                   ></div>
                 </div>
               ))}
             </div>
 
-            {/* Energy Orbs */}
-            <div className="absolute inset-0 pointer-events-none">
-              {[...Array(6)].map((_, i) => (
+            {/* Professional Status Indicators */}
+            <div className="flex justify-center space-x-8 mt-8">
+              <div className="flex items-center space-x-2 text-blue-300">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                <span className="text-sm font-mono">SYSTEM ONLINE</span>
+              </div>
+              <div className="flex items-center space-x-2 text-indigo-300">
                 <div
-                  key={i}
-                  className="absolute w-8 h-8 rounded-full animate-energy-orb"
-                  style={{
-                    background: `radial-gradient(circle, hsl(${i * 60}, 70%, 60%), transparent)`,
-                    top: Math.random() * 100 + "%",
-                    left: Math.random() * 100 + "%",
-                    animationDelay: Math.random() * 3 + "s",
-                    animationDuration: Math.random() * 4 + 3 + "s",
-                    boxShadow: `0 0 20px hsl(${i * 60}, 70%, 60%)`,
-                  }}
+                  className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"
+                  style={{ animationDelay: "0.5s" }}
                 ></div>
-              ))}
+                <span className="text-sm font-mono">SECURE CONNECTION</span>
+              </div>
+              <div className="flex items-center space-x-2 text-cyan-300">
+                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: "1s" }}></div>
+                <span className="text-sm font-mono">READY TO DEPLOY</span>
+              </div>
             </div>
           </div>
 
-          {/* Loading Progress Bar */}
+          {/* Professional Loading Bar */}
           {animationPhase >= 4 && (
-            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-80">
-              <div className="text-cyan-400 text-sm font-mono mb-2">INITIALIZING SYSTEM...</div>
-              <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-cyan-400 to-purple-500 animate-loading-bar"></div>
+            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 w-96 max-w-full px-4">
+              <div className="text-blue-300 text-sm font-mono mb-3 text-center">INITIALIZING E-VOTING PLATFORM...</div>
+              <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-blue-500/30">
+                <div className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 animate-professional-loading shadow-lg shadow-blue-500/50"></div>
+              </div>
+              <div className="text-xs text-blue-400 font-mono mt-2 text-center">
+                Powered by Advanced Security Protocols
               </div>
             </div>
           )}
         </div>
 
-        {/* Advanced CSS Animations */}
+        {/* Professional CSS Animations */}
         <style jsx>{`
-          .perspective-1000 {
-            perspective: 1000px;
-          }
-
-          .grid-background {
+          .corporate-grid {
             background-image: 
-              linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
+              linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
             width: 200%;
             height: 200%;
           }
 
-          @keyframes grid-move {
+          @keyframes grid-slide {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(-50px, -50px); }
+            100% { transform: translate(-60px, -60px); }
           }
 
-          @keyframes particle-explosion {
+          @keyframes corporate-particles {
             0% { 
               transform: translate(0, 0) scale(0); 
               opacity: 1; 
             }
             50% { 
-              opacity: 1; 
+              opacity: 0.8; 
             }
             100% { 
               transform: translate(
-                ${Math.random() * 800 - 400}px, 
-                ${Math.random() * 800 - 400}px
+                ${Math.random() * 400 - 200}px, 
+                ${Math.random() * 400 - 200}px
               ) scale(1); 
               opacity: 0; 
             }
           }
 
-          @keyframes letter-3d {
+          @keyframes corporate-letter {
             0% { 
-              transform: rotateY(90deg) rotateX(45deg) scale(0); 
+              transform: translateY(50px) rotateX(90deg) scale(0.5); 
               opacity: 0; 
             }
             50% { 
-              transform: rotateY(45deg) rotateX(22.5deg) scale(1.2); 
+              transform: translateY(-10px) rotateX(45deg) scale(1.1); 
               opacity: 0.8; 
             }
             100% { 
-              transform: rotateY(0deg) rotateX(0deg) scale(1); 
+              transform: translateY(0) rotateX(0deg) scale(1); 
               opacity: 1; 
             }
           }
 
-          @keyframes glitch-1 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
+          @keyframes professional-glow {
+            0% { transform: translateX(-100%) skewX(-10deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(200%) skewX(-10deg); opacity: 0; }
           }
 
-          @keyframes glitch-2 {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(2px, -2px); }
-            40% { transform: translate(2px, 2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(-2px, 2px); }
+          @keyframes professional-typewriter {
+            from { width: 0; opacity: 0; }
+            to { width: 100%; opacity: 1; }
           }
 
-          @keyframes holographic-sweep {
-            0% { transform: translateX(-100%) skewX(-15deg); }
-            100% { transform: translateX(200%) skewX(-15deg); }
-          }
-
-          @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
-          }
-
-          @keyframes cursor {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-          }
-
-          @keyframes matrix-rain {
+          @keyframes data-stream {
             0% { 
-              transform: translateY(-100vh); 
+              transform: translateY(-100vh) rotate(0deg); 
               opacity: 0; 
             }
             10% { 
-              opacity: 1; 
+              opacity: 0.6; 
             }
             90% { 
-              opacity: 1; 
+              opacity: 0.6; 
             }
             100% { 
-              transform: translateY(100vh); 
+              transform: translateY(100vh) rotate(360deg); 
               opacity: 0; 
             }
           }
 
-          @keyframes float-geometric {
+          @keyframes corporate-float {
             0%, 100% { 
-              transform: translateY(0) rotate(0deg); 
+              transform: translateY(0) rotate(0deg) scale(1); 
             }
-            50% { 
-              transform: translateY(-20px) rotate(180deg); 
+            33% { 
+              transform: translateY(-15px) rotate(120deg) scale(1.1); 
+            }
+            66% { 
+              transform: translateY(10px) rotate(240deg) scale(0.9); 
             }
           }
 
-          @keyframes energy-orb {
-            0%, 100% { 
-              transform: scale(0.5) rotate(0deg); 
-              opacity: 0.3; 
-            }
-            50% { 
-              transform: scale(1.5) rotate(180deg); 
-              opacity: 0.8; 
-            }
-          }
-
-          @keyframes loading-bar {
+          @keyframes professional-loading {
             0% { width: 0%; }
             100% { width: 100%; }
           }
 
-          @keyframes final-zoom {
+          @keyframes professional-exit {
             0% { 
-              transform: scale(1); 
+              transform: scale(1) rotateY(0deg); 
               opacity: 1; 
             }
             100% { 
-              transform: scale(0.1) rotateY(90deg); 
+              transform: scale(0.3) rotateY(90deg); 
               opacity: 0; 
             }
           }
 
-          .holographic-scanlines {
-            background: repeating-linear-gradient(
-              0deg,
+          .professional-rays {
+            background: conic-gradient(
+              from 0deg,
               transparent,
-              transparent 2px,
-              rgba(0, 255, 255, 0.1) 2px,
-              rgba(0, 255, 255, 0.1) 4px
+              rgba(59, 130, 246, 0.1),
+              transparent,
+              rgba(99, 102, 241, 0.1),
+              transparent,
+              rgba(34, 211, 238, 0.1),
+              transparent
             );
-            animation: scanlines 2s linear infinite;
+            animation: rays-rotate 8s linear infinite;
           }
 
-          @keyframes scanlines {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(4px); }
+          @keyframes rays-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
 
-          .animate-grid-move {
-            animation: grid-move 20s linear infinite;
+          .animate-grid-slide {
+            animation: grid-slide 25s linear infinite;
           }
 
-          .animate-particle-explosion {
-            animation: particle-explosion 3s ease-out forwards;
+          .animate-corporate-particles {
+            animation: corporate-particles 4s ease-out forwards;
           }
 
-          .animate-letter-3d {
-            animation: letter-3d 1s ease-out forwards;
+          .animate-corporate-letter {
+            animation: corporate-letter 1.2s ease-out forwards;
           }
 
-          .animate-glitch-1 {
-            animation: glitch-1 0.3s infinite;
+          .animate-professional-glow {
+            animation: professional-glow 3s ease-in-out infinite;
           }
 
-          .animate-glitch-2 {
-            animation: glitch-2 0.3s infinite reverse;
-          }
-
-          .animate-holographic-sweep {
-            animation: holographic-sweep 2s ease-in-out infinite;
-          }
-
-          .animate-typewriter {
-            animation: typewriter 2s steps(30) forwards;
+          .animate-professional-typewriter {
+            animation: professional-typewriter 2s ease-out forwards;
+            display: inline-block;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid;
           }
 
-          .animate-cursor {
-            animation: cursor 1s infinite;
+          .animate-data-stream {
+            animation: data-stream 6s linear infinite;
           }
 
-          .animate-matrix-rain {
-            animation: matrix-rain 5s linear infinite;
+          .animate-corporate-float {
+            animation: corporate-float 8s ease-in-out infinite;
           }
 
-          .animate-float-geometric {
-            animation: float-geometric 6s ease-in-out infinite;
+          .animate-professional-loading {
+            animation: professional-loading 2.5s ease-out forwards;
           }
 
-          .animate-energy-orb {
-            animation: energy-orb 4s ease-in-out infinite;
-          }
-
-          .animate-loading-bar {
-            animation: loading-bar 2s ease-out forwards;
-          }
-
-          .animate-final-zoom {
-            animation: final-zoom 1s ease-in forwards;
+          .animate-professional-exit {
+            animation: professional-exit 1s ease-in forwards;
           }
         `}</style>
       </div>
