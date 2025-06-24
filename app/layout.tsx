@@ -7,14 +7,6 @@ export const metadata: Metadata = {
   generator: 'Sseruwagi Sinclaire Sebatian',
 }
 
-     icons: {
-        icon: 'components/favicon.ico', // Path to your icon file in the public directory
-
-        apple: 'components/favicon.ico',
-        other: {
-          rel: 'components/favicon.ico',
-          url: 'components/favicon.ico',
-
 
 export default function RootLayout({
   children,
