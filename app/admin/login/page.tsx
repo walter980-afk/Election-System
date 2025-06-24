@@ -183,34 +183,6 @@ export default function AdminLoginPage() {
                   </>
                 )}
               </Button>
-
-              {/* Demo Credentials */}
-              <div className="text-center text-sm text-white/60 space-y-3 pt-4 border-t border-white/20">
-                <p className="font-medium">Demo Accounts:</p>
-                <div className="space-y-2">
-                  <div className="bg-white/5 rounded-lg p-3">
-                    <p className="text-white/80 font-medium">Super Admin</p>
-                    <p className="text-xs">
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80">sinclairesebastian</code> /
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80 ml-1">admin123</code>
-                    </p>
-                  </div>
-                  <div className="bg-white/5 rounded-lg p-3">
-                    <p className="text-white/80 font-medium">Chairperson</p>
-                    <p className="text-xs">
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80">chairperson</code> /
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80 ml-1">admin123</code>
-                    </p>
-                  </div>
-                  <div className="bg-white/5 rounded-lg p-3">
-                    <p className="text-white/80 font-medium">Head Teacher</p>
-                    <p className="text-xs">
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80">headteacher</code> /
-                      <code className="bg-white/10 px-2 py-1 rounded text-white/80 ml-1">admin123</code>
-                    </p>
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </div>

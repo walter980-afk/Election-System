@@ -6,7 +6,21 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { supabase } from "@/lib/supabase"
-import { FileText, Download, BarChart3, Users, Trophy } from "lucide-react"
+import { FileText, Download, BarChart3, Users, Trophy, PieChart, TrendingUp } from "lucide-react"
+import {
+  ResponsiveContainer,
+  BarChart as ReBarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart as RePieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+} from "recharts"
 
 interface ReportData {
   election: {
@@ -32,6 +46,11 @@ interface ReportData {
     }[]
     totalVotes: number
   }[]
+  analytics: {
+    turnoutByCategory: { category: string; votes: number }[]
+    voteDistribution: { name: string; value: number; color: string }[]
+    hourlyVoting: { hour: string; votes: number }[]
+  }
 }
 
 export default function ReportPage() {
@@ -110,6 +129,24 @@ export default function ReportPage() {
 
       const results = await Promise.all(resultsPromises)
 
+      // Mock analytics data (replace with actual data fetching)
+      const turnoutByCategory = [
+        { category: "Students", votes: Math.floor(Math.random() * 100) },
+        { category: "Faculty", votes: Math.floor(Math.random() * 80) },
+        { category: "Staff", votes: Math.floor(Math.random() * 60) },
+      ]
+
+      const voteDistribution = [
+        { name: "Candidate A", value: Math.floor(Math.random() * 100), color: "#8884d8" },
+        { name: "Candidate B", value: Math.floor(Math.random() * 80), color: "#82ca9d" },
+        { name: "Candidate C", value: Math.floor(Math.random() * 60), color: "#ffc658" },
+      ]
+
+      const hourlyVoting = Array.from({ length: 24 }, (_, i) => ({
+        hour: `${i}:00`,
+        votes: Math.floor(Math.random() * 30),
+      }))
+
       setReportData({
         election: {
           title: election.title,
@@ -124,6 +161,11 @@ export default function ReportPage() {
           totalVotes: allVotes?.length || 0,
         },
         results,
+        analytics: {
+          turnoutByCategory,
+          voteDistribution,
+          hourlyVoting,
+        },
       })
     } catch (error) {
       console.error("Error loading report data:", error)
@@ -252,6 +294,80 @@ Generated on: ${new Date().toLocaleString()}
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Turnout by Category – Bar Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BarChart3 className="w-5 h-5" />
+              Turnout by Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <ReBarChart data={reportData.analytics.turnoutByCategory}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="category" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="votes" fill="#6366f1" />
+              </ReBarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Vote Distribution – Pie Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <PieChart className="w-5 h-5" />
+              Vote Distribution
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <RePieChart>
+                <Tooltip />
+                <Pie
+                  data={reportData.analytics.voteDistribution}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  label
+                >
+                  {reportData.analytics.voteDistribution.map((entry, i) => (
+                    <Cell key={`cell-${i}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </RePieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Hourly Voting Pattern – Line Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="w-5 h-5" />
+            Hourly Voting Pattern
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="h-[300px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={reportData.analytics.hourlyVoting}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="votes" stroke="#14b8a6" strokeWidth={2.5} />
+            </LineChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
 

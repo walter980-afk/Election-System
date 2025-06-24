@@ -375,7 +375,7 @@ export default function BallotPage() {
 
       {/* Header with Timer */}
       <header className="bg-white/90 backdrop-blur-sm border-b relative z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-700">
             <ArrowLeft className="w-5 h-5" />
             <span>Back to Login</span>
@@ -420,54 +420,54 @@ export default function BallotPage() {
         </div>
       )}
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
+      <div className="container mx-auto px-4 py-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Progress Header */}
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-pulse">
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 🏫 Prefectorial Elections
               </h1>
-              <Badge variant="outline" className="px-4 py-2 text-lg">
+              <Badge variant="outline" className="px-3 py-1">
                 Step {currentStep + 1} of {posts.length}
               </Badge>
             </div>
-            <Progress value={progress} className="h-4 mb-2" />
-            <p className="text-sm text-gray-600 text-center font-medium">{Math.round(progress)}% Complete</p>
+            <Progress value={progress} className="h-3 mb-1" />
+            <p className="text-xs text-gray-600 text-center font-medium">{Math.round(progress)}% Complete</p>
           </div>
 
           {/* Current Position with PowerPoint Transition */}
           {currentPost && (
             <div className="relative mb-8 perspective-1000">
               <Card
-                className={`shadow-2xl border-2 border-blue-200 overflow-hidden transition-all duration-600 ease-in-out transform-gpu ${
+                className={`shadow-xl border border-blue-200 overflow-hidden transition-all duration-600 ease-in-out transform-gpu ${
                   isTransitioning ? (transitionDirection === "next" ? "slide-out-left" : "slide-out-right") : "slide-in"
                 }`}
               >
                 <CardHeader
-                  className={`bg-gradient-to-r ${getCategoryColor(currentPost.category)} text-white relative`}
+                  className={`bg-gradient-to-r ${getCategoryColor(currentPost.category)} text-white relative py-4`}
                 >
                   <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
-                  <CardTitle className="text-3xl flex items-center gap-3 relative z-10">
+                  <CardTitle className="text-xl flex items-center gap-2 relative z-10">
                     {getCategoryIcon(currentPost.category)}
                     {currentPost.title}
                   </CardTitle>
                   <div className="flex items-center gap-2 relative z-10">
-                    <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                    <Badge variant="secondary" className="bg-white/20 text-white border-white/30 text-xs">
                       {currentPost.category}
                     </Badge>
-                    <p className="opacity-90 text-lg">{currentPost.description}</p>
+                    <p className="opacity-90 text-sm">{currentPost.description}</p>
                   </div>
                 </CardHeader>
-                <CardContent className="p-8 bg-gradient-to-br from-white to-blue-50">
-                  <div className="space-y-6">
+                <CardContent className="p-4 bg-gradient-to-br from-white to-blue-50">
+                  <div className="space-y-3">
                     {currentPost.candidates.map((candidate, index) => (
                       <div
                         key={candidate.id}
-                        className={`relative p-6 border-2 rounded-xl cursor-pointer transition-all duration-500 transform hover:scale-105 ${
+                        className={`relative p-4 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-102 ${
                           selectedCandidates[currentPost.id] === candidate.id
-                            ? "border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 shadow-2xl scale-105"
-                            : "border-gray-200 hover:border-blue-400 hover:shadow-lg bg-white"
+                            ? "border-green-500 bg-gradient-to-r from-green-50 to-emerald-50 shadow-lg scale-102"
+                            : "border-gray-200 hover:border-blue-400 hover:shadow-md bg-white"
                         } ${selectedAnimation === candidate.id ? "animate-pulse scale-110" : ""}`}
                         onClick={() => handleCandidateSelect(currentPost.id, candidate.id, candidate.name)}
                         style={{
@@ -480,11 +480,11 @@ export default function BallotPage() {
                         )}
 
                         <div className="flex items-center justify-between relative z-10">
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-3">
                             <div
-                              className={`w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold transition-all ${
+                              className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                                 selectedCandidates[currentPost.id] === candidate.id
-                                  ? "bg-green-500 text-white animate-bounce"
+                                  ? "bg-green-500 text-white"
                                   : candidate.gender === "Male"
                                     ? "bg-blue-100 text-blue-600"
                                     : "bg-pink-100 text-pink-600"
@@ -496,14 +496,14 @@ export default function BallotPage() {
                                 .join("")}
                             </div>
                             <div>
-                              <h3 className="text-2xl font-bold text-gray-800 mb-2">{candidate.name}</h3>
+                              <h3 className="text-lg font-bold text-gray-800">{candidate.name}</h3>
                               <Badge
                                 variant="outline"
-                                className={
+                                className={`text-xs ${
                                   candidate.gender === "Male"
                                     ? "border-blue-300 text-blue-700"
                                     : "border-pink-300 text-pink-700"
-                                }
+                                }`}
                               >
                                 {candidate.gender}
                               </Badge>
@@ -578,15 +578,15 @@ export default function BallotPage() {
           </div>
 
           {/* Position Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
             {posts.map((post, index) => (
               <div
                 key={post.id}
-                className={`p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-105 ${
+                className={`p-2 rounded-lg text-center transition-all duration-300 text-xs ${
                   index === currentStep
-                    ? `bg-gradient-to-r ${getCategoryColor(post.category)} text-white border-2 border-blue-600 shadow-lg animate-pulse`
+                    ? `bg-gradient-to-r ${getCategoryColor(post.category)} text-white border border-blue-600 shadow-md`
                     : selectedCandidates[post.id]
-                      ? "bg-gradient-to-r from-green-400 to-emerald-500 text-white border border-green-400 shadow-md"
+                      ? "bg-gradient-to-r from-green-400 to-emerald-500 text-white border border-green-400"
                       : "bg-white border border-gray-300 hover:border-blue-400"
                 }`}
               >

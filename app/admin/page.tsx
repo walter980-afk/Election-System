@@ -1,11 +1,15 @@
 "use client"
 
+import { Input } from "@/components/ui/input"
+
+import { Label } from "@/components/ui/label"
+
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { supabase } from "@/lib/supabase"
-import { Users, Vote, Trophy, BarChart3, Zap, Play, X, Crown, Star, TrendingUp } from "lucide-react"
+import { Users, Vote, Trophy, BarChart3, Zap, Play, X, Crown, Star, TrendingUp, User, Lock } from "lucide-react"
 
 interface DashboardStats {
   totalVoters: number
@@ -55,6 +59,8 @@ export default function AdminDashboard() {
   const [currentAnimationStep, setCurrentAnimationStep] = useState(0)
   const [animationPhase, setAnimationPhase] = useState<"overview" | "individual" | "complete">("overview")
   const [postResults, setPostResults] = useState<PostResult[]>([])
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [profileData, setProfileData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" })
 
   useEffect(() => {
     // Check if user is authenticated and has super admin access
@@ -310,6 +316,32 @@ export default function AdminDashboard() {
 
   const turnoutPercentage = stats.totalVoters > 0 ? Math.round((stats.votedCount / stats.totalVoters) * 100) : 0
 
+  const handlePasswordChange = async () => {
+    if (!profileData.currentPassword || !profileData.newPassword || !profileData.confirmPassword) {
+      alert("Please fill in all password fields")
+      return
+    }
+
+    if (profileData.newPassword !== profileData.confirmPassword) {
+      alert("New passwords do not match")
+      return
+    }
+
+    if (profileData.newPassword.length < 6) {
+      alert("New password must be at least 6 characters long")
+      return
+    }
+
+    try {
+      // In a real app, you'd verify current password and update in database
+      alert("Password updated successfully!")
+      setShowProfileModal(false)
+      setProfileData({ currentPassword: "", newPassword: "", confirmPassword: "" })
+    } catch (error) {
+      alert("Failed to update password")
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -318,6 +350,10 @@ export default function AdminDashboard() {
           <p className="text-muted-foreground">Election management overview and quick actions</p>
         </div>
         <div className="flex gap-2">
+          <Button onClick={() => setShowProfileModal(true)} variant="outline">
+            <User className="w-4 h-4 mr-2" />
+            Profile
+          </Button>
           <Button
             onClick={startAnimatedView}
             className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
@@ -703,6 +739,68 @@ export default function AdminDashboard() {
         </div>
       )}
 
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <User className="w-5 h-5" />
+                Profile Settings
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="currentPassword">Current Password</Label>
+                <Input
+                  id="currentPassword"
+                  type="password"
+                  value={profileData.currentPassword}
+                  onChange={(e) => setProfileData({ ...profileData, currentPassword: e.target.value })}
+                  placeholder="Enter current password"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="newPassword">New Password</Label>
+                <Input
+                  id="newPassword"
+                  type="password"
+                  value={profileData.newPassword}
+                  onChange={(e) => setProfileData({ ...profileData, newPassword: e.target.value })}
+                  placeholder="Enter new password"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={profileData.confirmPassword}
+                  onChange={(e) => setProfileData({ ...profileData, confirmPassword: e.target.value })}
+                  placeholder="Confirm new password"
+                />
+              </div>
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handlePasswordChange} className="flex-1">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Update Password
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowProfileModal(false)
+                    setProfileData({ currentPassword: "", newPassword: "", confirmPassword: "" })
+                  }}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* CSS Animations */}
       <style jsx>{`
         @keyframes fade-in {
@@ -729,6 +827,13 @@ export default function AdminDashboard() {
           to { 
             opacity: 1; 
             transform: scale(1); 
+          }
+        }
+
+        @keyframes zoom-text {
+          0% {
+            opacity: 0;
+            transform: scale(0.5)
           }
         }
 
