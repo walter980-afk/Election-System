@@ -1,140 +1,202 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Vote, AlertCircle, Info } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { supabase } from "@/lib/supabase"
+import { Vote, User } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function LoginPage() {
   const [voterId, setVoterId] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+  const handleVoterLogin = async () => {
+    if (!voterId.trim()) return
 
-    if (!voterId.trim()) {
-      setError("Please enter your Voter ID")
-      setIsLoading(false)
-      return
-    }
+    setLoading(true)
+    try {
+      const { data, error } = await supabase.from("voters").select("*").eq("voter_id", voterId.trim()).single()
 
-    // Simulate authentication
-    setTimeout(() => {
-      if (voterId.length >= 6) {
-        window.location.href = "/ballot"
-      } else {
-        setError("Invalid Voter ID. Please check and try again.")
-        setIsLoading(false)
+      if (error || !data) {
+        alert("Invalid Voter ID. Please check your ID and try again.")
+        return
       }
-    }, 1000)
+
+      if (data.has_voted) {
+        alert("You have already voted in this election!")
+        return
+      }
+
+      window.location.href = `/ballot?voterId=${data.id}&voterIdNumber=${data.voter_id}`
+    } catch (error) {
+      alert("Login failed. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
-        {/* Header */}
-        <div className="text-center text-white space-y-4">
-          <div className="flex justify-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
-              <Vote className="h-12 w-12 text-white" />
-            </div>
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold">Student Voting Portal</h1>
-            <p className="text-blue-100 mt-2">Lubiri Secondary School Elections</p>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden animate-fade-in">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        {/* Floating Orbs */}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 animate-pulse"
+            style={{
+              width: Math.random() * 200 + 100 + "px",
+              height: Math.random() * 200 + 100 + "px",
+              top: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+              animationDelay: Math.random() * 3 + "s",
+              animationDuration: Math.random() * 4 + 3 + "s",
+            }}
+          />
+        ))}
 
-        {/* Login Card */}
-        <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-gray-800">Cast Your Vote</CardTitle>
-            <CardDescription className="text-gray-600">Enter your Voter ID to access the ballot</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Geometric Shapes */}
+        <div
+          className="absolute top-20 left-20 w-32 h-32 border-2 border-white/10 rotate-45 animate-spin"
+          style={{ animationDuration: "20s" }}
+        />
+        <div className="absolute bottom-20 right-20 w-24 h-24 border-2 border-purple-300/20 rotate-12 animate-bounce" />
+        <div className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-r from-pink-400/20 to-purple-400/20 rounded-full animate-pulse" />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          {/* Logo and Header */}
+          <div className="text-center mb-8 animate-fade-in">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse" />
+              <div className="relative bg-white rounded-full p-4 mx-auto w-32 h-32 flex items-center justify-center shadow-2xl">
+                <Image src="/images/logo.png" alt="E-Voting Logo" width={80} height={80} className="object-contain" />
+              </div>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-2 animate-slide-up">
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                E-Voting System
+              </span>
+            </h1>
+            <p className="text-white/80 text-lg animate-slide-up" style={{ animationDelay: "0.2s" }}>
+              Secure • Transparent • Democratic
+            </p>
+            <Badge variant="outline" className="mt-4 px-4 py-2 border-green-400 text-green-400 animate-pulse">
+              <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-ping" />
+              Election Active
+            </Badge>
+          </div>
+
+          {/* Login Form */}
+          <Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl animate-scale-in">
+            <CardHeader className="text-center pb-4">
+              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full flex items-center justify-center mb-4 animate-pulse">
+                <User className="w-8 h-8 text-white" />
+              </div>
+              <CardTitle className="text-2xl text-white">Student Voter Login</CardTitle>
+              <p className="text-white/70">Enter your Student ID to cast your vote</p>
+            </CardHeader>
+            <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="voterId" className="text-gray-700 font-medium">
-                  Voter ID
-                </Label>
+                <label htmlFor="voterId" className="text-sm font-medium text-white/90">
+                  Student ID
+                </label>
                 <Input
                   id="voterId"
-                  type="text"
-                  placeholder="Enter your Voter ID"
+                  placeholder="Enter your Student ID (e.g., V001)"
                   value={voterId}
                   onChange={(e) => setVoterId(e.target.value)}
-                  className="h-12 text-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                  disabled={isLoading}
+                  onKeyPress={(e) => e.key === "Enter" && handleVoterLogin()}
+                  className="text-center text-lg font-mono bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:bg-white/20 transition-all"
                 />
               </div>
-
-              {error && (
-                <Alert variant="destructive" className="bg-red-50 border-red-200">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription className="text-red-700">{error}</AlertDescription>
-                </Alert>
-              )}
-
               <Button
-                type="submit"
-                className="w-full h-12 text-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold"
-                disabled={isLoading}
+                onClick={handleVoterLogin}
+                disabled={loading || !voterId.trim()}
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200"
+                size="lg"
               >
-                {isLoading ? "Verifying..." : "Access Ballot"}
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Verifying...
+                  </div>
+                ) : (
+                  <>
+                    <Vote className="w-5 h-5 mr-2" />
+                    Access Ballot
+                  </>
+                )}
               </Button>
-            </form>
 
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-start space-x-3 text-sm text-gray-600">
-                <Info className="h-4 w-4 mt-0.5 text-blue-500 flex-shrink-0" />
-                <div>
-                  <p className="font-medium text-gray-700">Voting Instructions:</p>
-                  <ul className="mt-1 space-y-1 text-xs">
-                    <li>• Use your assigned Voter ID to log in</li>
-                    <li>• You can only vote once per election</li>
-                    <li>• Review your choices before submitting</li>
-                    <li>• Contact election officials if you need help</li>
-                  </ul>
-                </div>
+              {/* Admin Access Link */}
+              <div className="text-center pt-4 border-t border-white/20">
+                <Link
+                  href="/admin/login"
+                  className="text-white/70 hover:text-white text-sm transition-colors underline"
+                >
+                  Admin Access →
+                </Link>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Admin Login Link */}
-        <div className="text-center">
-          <Link href="/admin/login">
-            <Button variant="ghost" className="text-white hover:bg-white/10">
-              Administrator Login
-            </Button>
-          </Link>
-        </div>
-
-        {/* About Link */}
-        <div className="text-center">
-          <Link href="/about">
-            <Button variant="ghost" className="text-white hover:bg-white/10">
-              About This System
-            </Button>
-          </Link>
-        </div>
-
-        {/* Creator Credit */}
-        <div className="text-center text-white/70 text-sm">
-          <p>
-            Created by <span className="font-medium text-white">Sseruwagi Sinclaire Sebastian</span>
-          </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
+
+      {/* Creator Credit */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+        <p className="text-white/50 text-sm">
+          Created by <span className="text-white/70 font-medium">Sseruwagi Sinclaire Sebastian</span>
+        </p>
+      </div>
+
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slide-up {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0); 
+          }
+        }
+        
+        @keyframes scale-in {
+          from { 
+            opacity: 0; 
+            transform: scale(0.9); 
+          }
+          to { 
+            opacity: 1; 
+            transform: scale(1); 
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out forwards;
+        }
+        
+        .animate-slide-up {
+          animation: slide-up 0.8s ease-out forwards;
+        }
+        
+        .animate-scale-in {
+          animation: scale-in 0.6s ease-out forwards;
+        }
+      `}</style>
     </div>
   )
 }
