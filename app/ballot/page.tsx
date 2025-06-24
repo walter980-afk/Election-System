@@ -314,7 +314,7 @@ export default function BallotPage() {
     }
   }
 
-  const progress = ((currentStep + 1) / posts.length) * 100
+  const progress = posts.length > 0 ? ((currentStep + 1) / posts.length) * 100 : 0
 
   if (loading) {
     return (
@@ -349,7 +349,7 @@ export default function BallotPage() {
     )
   }
 
-  const currentPost = posts[currentStep]
+  const currentPost = posts.length > 0 ? posts[currentStep] : null
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden">
@@ -429,7 +429,7 @@ export default function BallotPage() {
                 🏫 Prefectorial Elections
               </h1>
               <Badge variant="outline" className="px-3 py-1">
-                Step {currentStep + 1} of {posts.length}
+                Step {posts.length > 0 ? currentStep + 1 : 0} of {posts.length}
               </Badge>
             </div>
             <Progress value={progress} className="h-3 mb-1" />
@@ -437,7 +437,18 @@ export default function BallotPage() {
           </div>
 
           {/* Current Position with PowerPoint Transition */}
-          {currentPost && (
+          {posts.length === 0 ? (
+            <Card className="shadow-xl border border-blue-200 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500 text-white relative py-4">
+                <CardTitle className="text-xl flex items-center gap-2 relative z-10">
+                  No Positions Available
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 bg-gradient-to-br from-white to-blue-50">
+                <p className="text-center py-8">There are currently no positions available for voting. Please check back later.</p>
+              </CardContent>
+            </Card>
+          ) : currentPost && (
             <div className="relative mb-8 perspective-1000">
               <Card
                 className={`shadow-xl border border-blue-200 overflow-hidden transition-all duration-600 ease-in-out transform-gpu ${
@@ -534,52 +545,67 @@ export default function BallotPage() {
 
           {/* Navigation */}
           <div className="flex justify-between items-center mb-8">
-            <Button
-              onClick={prevStep}
-              disabled={currentStep === 0 || isTransitioning}
-              variant="outline"
-              size="lg"
-              className="hover:scale-105 transition-transform"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Previous
-            </Button>
-
-            {currentStep === posts.length - 1 ? (
-              <Button
-                onClick={handleVote}
-                disabled={submitting || Object.keys(selectedCandidates).length !== posts.length}
-                className="bg-green-600 hover:bg-green-700 hover:scale-105 transition-all"
-                size="lg"
-              >
-                {submitting ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Submitting Vote...
-                  </div>
-                ) : (
-                  <>
-                    <CheckCircle className="w-5 h-5 mr-2" />
-                    🗳️ Submit My Vote!
-                  </>
-                )}
+            {posts.length === 0 ? (
+              <Button asChild className="mx-auto bg-blue-600 hover:bg-blue-700 hover:scale-105 transition-all" size="lg">
+                <Link href="/">
+                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  Return to Login
+                </Link>
               </Button>
             ) : (
-              <Button
-                onClick={nextStep}
-                disabled={!selectedCandidates[currentPost?.id] || isTransitioning}
-                size="lg"
-                className="hover:scale-105 transition-transform"
-              >
-                Next Position
-                <ArrowLeft className="w-5 h-5 ml-2 rotate-180" />
-              </Button>
+              <>
+                <Button
+                  onClick={prevStep}
+                  disabled={currentStep === 0 || isTransitioning}
+                  variant="outline"
+                  size="lg"
+                  className="hover:scale-105 transition-transform"
+                >
+                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  Previous
+                </Button>
+
+                {currentStep === posts.length - 1 ? (
+                  <Button
+                    onClick={handleVote}
+                    disabled={submitting || Object.keys(selectedCandidates).length !== posts.length}
+                    className="bg-green-600 hover:bg-green-700 hover:scale-105 transition-all"
+                    size="lg"
+                  >
+                    {submitting ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Submitting Vote...
+                      </div>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        🗳️ Submit My Vote!
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={nextStep}
+                    disabled={!selectedCandidates[currentPost?.id] || isTransitioning}
+                    size="lg"
+                    className="hover:scale-105 transition-transform"
+                  >
+                    Next Position
+                    <ArrowLeft className="w-5 h-5 ml-2 rotate-180" />
+                  </Button>
+                )}
+              </>
             )}
           </div>
 
           {/* Position Overview */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
-            {posts.map((post, index) => (
+            {posts.length === 0 ? (
+              <div className="col-span-full text-center text-gray-500 py-4">
+                No positions available for voting
+              </div>
+            ) : posts.map((post, index) => (
               <div
                 key={post.id}
                 className={`p-2 rounded-lg text-center transition-all duration-300 text-xs ${
