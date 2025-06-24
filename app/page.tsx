@@ -6,10 +6,9 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { supabase } from "@/lib/supabase"
-import { Vote, User } from "lucide-react"
+import { Vote, User, HelpCircle, BarChart3, FileText, Info } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-
 
 export default function LoginPage() {
   const [voterId, setVoterId] = useState("")
@@ -135,6 +134,38 @@ export default function LoginPage() {
                   </>
                 )}
               </Button>
+
+              {/* Quick Links */}
+              <div className="space-y-3 pt-4 border-t border-white/20">
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/results">
+                    <Button variant="outline" size="sm" className="w-full text-white/80 border-white/30 hover:bg-white/10">
+                      <BarChart3 className="w-4 h-4 mr-1" />
+                      Results
+                    </Button>
+                  </Link>
+                  <Link href="/help">
+                    <Button variant="outline" size="sm" className="w-full text-white/80 border-white/30 hover:bg-white/10">
+                      <HelpCircle className="w-4 h-4 mr-1" />
+                      Help
+                    </Button>
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/about">
+                    <Button variant="outline" size="sm" className="w-full text-white/80 border-white/30 hover:bg-white/10">
+                      <Info className="w-4 h-4 mr-1" />
+                      About
+                    </Button>
+                  </Link>
+                  <Link href="/documentation">
+                    <Button variant="outline" size="sm" className="w-full text-white/80 border-white/30 hover:bg-white/10">
+                      <FileText className="w-4 h-4 mr-1" />
+                      Docs
+                    </Button>
+                  </Link>
+                </div>
+              </div>
 
               {/* Admin Access Link */}
               <div className="text-center pt-4 border-t border-white/20">
