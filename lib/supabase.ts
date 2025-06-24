@@ -1,9 +1,18 @@
 import { createClient } from "@supabase/supabase-js"
+import { mockSupabaseAPI } from "./mock-data"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Check if we have valid Supabase credentials
+const hasValidCredentials = supabaseUrl && supabaseAnonKey && 
+  supabaseUrl !== "https://your-project.supabase.co" && 
+  supabaseAnonKey !== "your-anon-key-here"
+
+// Create real client or use mock
+export const supabase = hasValidCredentials 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : mockSupabaseAPI as any
 
 export type Database = {
   public: {

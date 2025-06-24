@@ -541,7 +541,7 @@ export default function BallotPage() {
                 </CardContent>
               </Card>
             </div>
-          ))}
+          )}
 
           {/* Navigation */}
           <div className="flex justify-between items-center mb-8">
@@ -634,7 +634,7 @@ export default function BallotPage() {
                   <div className="text-sm opacity-90 animate-bounce mt-2">👆 Vote Now!</div>
                 )}
               </div>
-            )))}
+            ))}
           </div>
         </div>
       </div>
