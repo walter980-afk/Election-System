@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
      icons: {
         icon: 'components/favicon.ico', // Path to your icon file in the public directory
-        shortcut: 'components/favicon.ico',
+
         apple: 'components/favicon.ico',
         other: {
           rel: 'components/favicon.ico',
