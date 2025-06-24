@@ -10,20 +10,7 @@ import { Vote, User } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
- export const metadata: Metadata = {
-      icons: {
-        icon: [
-          {
-            url: 'public/favicon.ico',
-            media: '(prefers-color-scheme: light)',
-          },
-          {
-            url: 'public/favicon.ico',
-            media: '(prefers-color-scheme: dark)',
-          },
-        ],
-      },
-    };
+
 export default function LoginPage() {
   const [voterId, setVoterId] = useState("")
   const [loading, setLoading] = useState(false)
