@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { NotificationProvider } from '@/components/notification-provider'
 
 export const metadata: Metadata = {
-  title: 'Lubiri SS E-Voting Platform',
-  description: 'Created by Sseruwagi Sinclaire Sebastian',
-  icon: 'components/favicon.ico', // Path to your icon file in the public directory
-  generator: 'Sseruwagi Sinclaire Sebatian',
+  title: 'v0 App',
+  description: 'Created with v0',
+  generator: 'v0.dev',
 }
 
 export default function RootLayout({
@@ -16,10 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-        <NotificationProvider />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

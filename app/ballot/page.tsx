@@ -337,7 +337,7 @@ export default function BallotPage() {
             </div>
             <h2 className="text-3xl font-bold text-green-800 mb-4">🎉 Vote Submitted!</h2>
             <p className="text-gray-600 mb-2">Thank you, {voter?.name}!</p>
-            <p className="text-gray-600 mb-8">Your vote counts.</p>
+            <p className="text-gray-600 mb-8">Your vote has been recorded securely.</p>
             <div className="space-y-3">
               <Button asChild className="w-full">
                 <Link href="/">Return to Home</Link>
