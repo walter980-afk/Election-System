@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { NotificationProvider } from '@/components/notification-provider'
 
 export const metadata: Metadata = {
   title: 'Lubiri SS E-Voting Platform',
@@ -8,7 +9,6 @@ export const metadata: Metadata = {
   generator: 'Sseruwagi Sinclaire Sebatian',
 }
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <NotificationProvider />
+      </body>
     </html>
   )
 }
